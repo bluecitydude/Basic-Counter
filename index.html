@@ -1,156 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Counter</title>
-  <link rel="stylesheet" href="assets/css/all.min.css">
-  <style>
-    body{
-        background-color: rgba(123, 195, 35, 0.5);
-    }
-    label {
-      font-size: large;
-      margin-right: 3%;
-    }
-
-    h1 {
-      font-size: larger;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    input {
-      border-radius: 20%;
-      border: 5px solid black;
-    }
-
-    .input {
-      margin: 0 auto;
-      margin-top: 20%;
-      text-align: center;
-    }
-
-    .start, .stop {
-      color: white;
-      border-radius: 50%;
-      margin-top: 5%;
-      transition: 0.3s;
-      transform: scale(1.5);
-      padding: 10px 20px;
-      border: none;
-      cursor: pointer;
-      position: relative;
-      z-index:10;
-    }
-
-    .start {
-      background-color: green;
-      margin-right: 5%;
-    }
-
-    .stop {
-      background-color: red;
-      margin-left: 5%;
-    }
-
-    .start:hover, .stop:hover {
-      transform: scale(2);
-    }
-
-    .inputs {
-      font-family: 'Times New Roman', Times, serif;
-    }
-
-    .clock {
-      margin-top: 10%;
-      border: 5px solid black;
-      border-radius: 40%;
-      text-align: center;
-      padding: 40px 0;
-    }
-
-    h1 {
-      transform: scale(2.5);
-    }
-
-    .center {
-      margin: 0 auto;
-      max-width: 400px;
-      text-align: center;
-    }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Sporty Counter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <main class="counter-card" role="main">
+    <header class="header">
+      <h1 class="title">Sporty Countdown</h1>
+      <p class="subtitle">Smooth • Responsive • Animated</p>
+    </header>
 
-  <div class="center">
-    <div class="input">
-      <div class="label">
-        <label for="hour">HH:</label>
-        <label for="min">MM:</label>
-        <label for="sec">Sec:</label><br>
-      </div>
+    <section class="controls">
       <div class="inputs">
-        <input type="number" max="99" min="0" id="hour">
-        <input type="number" max="59" min="0" id="min">
-        <input type="number" max="59" min="0" id="sec"><br>
-        <button type="button" class="start" onclick="time()">Start</button>
-        <button type="button" class="stop" onclick="stop()">Stop</button>
+        <label class="sr-only" for="hour">Hours</label>
+        <input id="hour" type="number" inputmode="numeric" min="0" max="99" placeholder="HH">
+
+        <label class="sr-only" for="min">Minutes</label>
+        <input id="min" type="number" inputmode="numeric" min="0" max="59" placeholder="MM">
+
+        <label class="sr-only" for="sec">Seconds</label>
+        <input id="sec" type="number" inputmode="numeric" min="0" max="59" placeholder="SS">
       </div>
-    </div>
 
-    <div class="clock">
-      <h1 id="timer">00:00:00</h1>
-    </div>
-  </div>
+      <div class="actions">
+        <button id="startBtn" class="btn start">Start</button>
+        <button id="stopBtn" class="btn stop">Stop</button>
+      </div>
+    </section>
 
-  <script>
-    let timerId = null;
-    let h = 0, m = 0, s = 0;
+    <section class="display">
+      <div id="timer" class="timer">00:00:00</div>
+    </section>
+  </main>
 
-    function time() {
-      if (timerId) { // timer already running
-        stop();
-        return;
-      }
+  <a href="https://basiccountertej.netlify.app/"></a>
 
-      h = +document.getElementById('hour').value || 0;
-      m = +document.getElementById('min').value || 0;
-      s = +document.getElementById('sec').value || 0;
-
-      if (h < 0 || m < 0 || s < 0) {
-        document.getElementById('timer').innerHTML = "Enter valid countdown";
-        return;
-      }
-
-      updateDisplay();
-
-      timerId = setInterval(() => {
-        if (h === 0 && m === 0 && s === 0) {
-          document.getElementById('timer').innerHTML = "Countdown ends";
-          stop();
-          return;
-        }
-
-        if (s > 0) s--;
-        else if (m > 0) { s = 59; m--; }
-        else if (h > 0) { s = 59; m = 59; h--; }
-
-        updateDisplay();
-      }, 1000);
-    }
-
-    function stop() {
-      clearInterval(timerId);
-      timerId = null;
-      document.getElementById('timer').innerHTML = "Countdown stopped";
-    }
-
-    function updateDisplay() {
-      document.getElementById('timer').innerHTML =
-        `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-    }
-  </script>
-
+  <script src="js/script.js" defer></script>
 </body>
 </html>
